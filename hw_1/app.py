@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
+from pathlib import Path
 from sklearn.linear_model import Ridge
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -15,7 +16,7 @@ st.set_page_config(
 
 @st.cache_resource
 def get_df():
-        return pd.read_csv('./X_train_cat.csv')
+        return pd.read_csv(Path(__file__).resolve().parent / './X_train_cat.csv')
 
 @st.cache_resource
 def get_pair_plot(df):
@@ -27,7 +28,7 @@ def get_corr_heatmap(df):
         sns.heatmap(df.select_dtypes('number').corr())
         return fig
 
-with open('./model_pipeline.pkl', 'rb') as f:
+with open(Path(__file__).resolve().parent / './model_pipeline.pkl', 'rb') as f:
         loaded_pipeline = pickle.load(f)
 
 df = get_df()
